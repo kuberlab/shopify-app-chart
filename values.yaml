@@ -3,7 +3,6 @@ backend:
     Name: kuberlab/digitalsuits-shopify-app
     Tag: latest
   baseUrl: https://extension-shopify.veriken.net
-  baseHost: extension-shopify.veriken.net
   db:
     host: host
     port: 5432
@@ -22,3 +21,5 @@ backend:
       value: "read_products,write_products,read_orders,write_orders,read_inventory,write_inventory,read_merchant_managed_fulfillment_orders,write_merchant_managed_fulfillment_orders"
     - name: SHOP
       value: ""
+    - name: VERIKEN_API_URL
+      value: "https://testnet.veriken.net/api/v1"

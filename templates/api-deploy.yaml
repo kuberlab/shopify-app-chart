@@ -17,6 +17,10 @@ spec:
       containers:
         - name:  shopify-veriken-api
           image: "{{ printf "%s:%s" .Values.backend.Image.Name .Values.backend.Image.Tag}}"
+          args:
+            - /bin/sh
+            - -c
+            - "npx -y sequelize-cli db:migrate && npm run serve"
           readinessProbe:
             httpGet:
               path: /probe
@@ -30,7 +34,7 @@ spec:
             - name: PORT
               value: "8082"
             - name: HOST
-              value: "{{ .Values.backend.baseHost }}"
+              value: "{{ .Values.backend.baseUrl }}"
             - name: DATABASE_HOST
               value: {{ .Values.backend.db.host }}
             - name: DATABASE_USERNAME
@@ -41,8 +45,6 @@ spec:
               value: {{ .Values.backend.db.dbname }}
             - name: DATABASE_PORT
               value: "{{ .Values.backend.db.port }}"
-            - name: BASE_URL
-              value: {{ .Values.backend.baseUrl }}
             {{- range .Values.backend.envVars }}
             - name: {{ .name }}
               value: '{{ .value }}'
