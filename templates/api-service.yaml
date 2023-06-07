@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: shopify-veriken
+    component: shopify-veriken-api
+  name: nft-planet-api
+spec:
+  ports:
+    - name: http
+      port: 8082
+      protocol: TCP
+      targetPort: 8082
+  selector:
+    app: shopify-veriken
+    component: shopify-veriken-api
