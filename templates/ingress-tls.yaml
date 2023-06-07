@@ -25,27 +25,27 @@ spec:
             service:
               name: shopify-veriken-api
               port:
-                number: 8082
+                number: 8080
         - path: /file
           pathType: Prefix
           backend:
             service:
               name: shopify-veriken-api
               port:
-                number: 8082
+                number: 8080
         - path: /api
           pathType: Prefix
           backend:
             service:
               name: shopify-veriken-api
               port:
-                number: 8082
+                number: 8080
         - path: /
           pathType: Prefix
           backend:
             service:
               name: shopify-veriken-api
               port:
-                number: 80
+                number: 8080
   {{- end }}
 

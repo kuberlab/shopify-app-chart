@@ -21,18 +21,18 @@ spec:
             - /bin/sh
             - -c
             - "npx -y sequelize-cli db:migrate && npm run serve"
-          readinessProbe:
-            httpGet:
-              path: /probe
-              port: 8082
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 3
-            successThreshold: 1
-            failureThreshold: 3
+          #readinessProbe:
+          #  httpGet:
+          #    path: /probe
+          #    port: 8082
+          #  initialDelaySeconds: 30
+          #  periodSeconds: 10
+          #  timeoutSeconds: 3
+          #  successThreshold: 1
+          #  failureThreshold: 3
           env:
             - name: PORT
-              value: "8082"
+              value: "8080"
             - name: HOST
               value: "{{ .Values.backend.baseUrl }}"
             - name: DATABASE_HOST
@@ -50,5 +50,5 @@ spec:
               value: '{{ .value }}'
             {{- end }}
           ports:
-            - containerPort: 8082
+            - containerPort: 8080
               name: http
