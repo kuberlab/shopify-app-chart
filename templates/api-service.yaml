@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: shopify-veriken
+    component: shopify-veriken-api
+  name: shopify-veriken-api
+spec:
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: shopify-veriken
+    component: shopify-veriken-api

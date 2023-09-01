@@ -1,0 +1,17 @@
+Description: Shopify veriken app
+Engine: gotpl
+Home: https://kibernetika.ai
+Keywords:
+- NFT
+- nft-planet
+- Kibernetika
+- Veriken
+- Shopify
+Maintainers:
+- Email: nmahotkin@kibernetika.ai
+  Name: Nikolay Mahotkin
+name: shopify-veriken-app
+Name: shopify-veriken-app
+Version: 1.0.0
+version: 1.0.0
+apiVersion: v1

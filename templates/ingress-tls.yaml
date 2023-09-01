@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shopify-veriken-tls
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    certmanager.k8s.io/cluster-issuer: kibernetika-cert-issuer
+    cert-manager.io/cluster-issuer: kibernetika-cert-issuer
+    nginx.ingress.kubernetes.io/proxy-body-size: 256m
+spec:
+  tls:
+    - hosts:
+      {{- range $i, $dns := .Values.backend.dns }}
+      - "{{ $dns }}"
+      {{- end }}
+      secretName: shopify-veriken-tls
+  rules:
+  {{- range $i, $dns := .Values.backend.dns }}
+  - host: {{ $dns }}
+    http:
+      paths:
+        - path: /swagger
+          pathType: Prefix
+          backend:
+            service:
+              name: shopify-veriken-api
+              port:
+                number: 8080
+        - path: /file
+          pathType: Prefix
+          backend:
+            service:
+              name: shopify-veriken-api
+              port:
+                number: 8080
+        - path: /api
+          pathType: Prefix
+          backend:
+            service:
+              name: shopify-veriken-api
+              port:
+                number: 8080
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: shopify-veriken-api
+              port:
+                number: 8080
+  {{- end }}
+

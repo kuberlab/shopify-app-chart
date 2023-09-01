@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopify-veriken-api
+spec:
+  selector:
+    matchLabels:
+      app: shopify-veriken
+      component: shopify-veriken-api
+  replicas: {{ .Values.backend.replicas }}
+  template:
+    metadata:
+      labels:
+        app: shopify-veriken
+        component: shopify-veriken-api
+    spec:
+      containers:
+        - name:  shopify-veriken-api
+          image: "{{ printf "%s:%s" .Values.backend.Image.Name .Values.backend.Image.Tag}}"
+          args:
+            - /bin/sh
+            - -c
+            - "npx -y sequelize-cli db:migrate && npm run serve"
+          #readinessProbe:
+          #  httpGet:
+          #    path: /probe
+          #    port: 8082
+          #  initialDelaySeconds: 30
+          #  periodSeconds: 10
+          #  timeoutSeconds: 3
+          #  successThreshold: 1
+          #  failureThreshold: 3
+          env:
+            - name: PORT
+              value: "8080"
+            - name: HOST
+              value: "{{ .Values.backend.baseUrl }}"
+            - name: DATABASE_HOST
+              value: {{ .Values.backend.db.host }}
+            - name: DATABASE_USERNAME
+              value: {{ .Values.backend.db.user }}
+            - name: DATABASE_PASSWORD
+              value: {{ .Values.backend.db.password }}
+            - name: DATABASE_NAME
+              value: {{ .Values.backend.db.dbname }}
+            - name: DATABASE_PORT
+              value: "{{ .Values.backend.db.port }}"
+            {{- range .Values.backend.envVars }}
+            - name: {{ .name }}
+              value: '{{ .value }}'
+            {{- end }}
+          ports:
+            - containerPort: 8080
+              name: http
